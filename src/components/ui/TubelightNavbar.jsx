@@ -24,7 +24,6 @@ function getActive(pathname) {
 export default function TubelightNavbar() {
   const location = useLocation()
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [activeTab, setActiveTab] = useState(() => getActive(location.pathname))
 
   useEffect(() => {
@@ -32,36 +31,18 @@ export default function TubelightNavbar() {
     setOpen(false)
   }, [location.pathname])
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const atTop = !scrolled
-
   return (
     <>
-      {/* ── Top header ─────────────────────────────────────────────── */}
-      <header
-        className={`fixed top-0 inset-x-0 z-50 h-16 transition-all duration-500 ease-in-out ${
-          atTop
-            ? 'bg-transparent border-b border-white/10'
-            : 'bg-white/60 backdrop-blur-2xl border-b border-white/40 shadow-[0_4px_30px_-4px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
-        }`}
-      >
+      {/* ── Top header bar ─────────────────────────────────────────── */}
+      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white/95 backdrop-blur-sm border-b border-amber-100/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between relative">
 
           {/* Logo */}
           <Link to="/" className="flex flex-col leading-tight shrink-0 min-w-0">
-            <span className={`font-heading text-base sm:text-lg lg:text-xl font-bold truncate transition-colors duration-300 drop-shadow-sm ${
-              atTop ? 'text-white' : 'text-primary'
-            }`}>
+            <span className="font-heading text-base sm:text-lg lg:text-xl font-bold text-primary truncate">
               Nandoos Garments
             </span>
-            <span className={`text-[10px] sm:text-[11px] font-medium tracking-wide transition-colors duration-300 ${
-              atTop ? 'text-amber-200' : 'text-secondary'
-            }`}>
+            <span className="text-[10px] sm:text-[11px] text-secondary font-medium tracking-wide">
               നന്ദൂസ് ഗാർമെൻ്റ്സ്
             </span>
           </Link>
@@ -69,15 +50,8 @@ export default function TubelightNavbar() {
           {/* ── Tubelight pill — desktop lg+ ─────────────────────── */}
           <nav
             aria-label="Main navigation"
-            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 py-1 px-1 rounded-full"
-            style={{
-              background: 'rgba(255,255,255,0.12)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.25)',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 16px -4px rgba(0,0,0,0.1)',
-              overflow: 'visible',
-            }}
+            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-stone-50/80 border border-stone-200/80 py-1 px-1 rounded-full shadow-sm"
+            style={{ overflow: 'visible' }}
           >
             {navItems.map((item) => {
               const isActive = activeTab === item.name
@@ -86,18 +60,14 @@ export default function TubelightNavbar() {
                   key={item.name}
                   to={item.url}
                   onClick={() => setActiveTab(item.name)}
-                  className={`relative text-sm font-medium px-4 py-1.5 rounded-full transition-colors whitespace-nowrap z-10 ${
-                    isActive
-                      ? atTop ? 'text-amber-300' : 'text-primary'
-                      : atTop ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-primary'
-                  }`}
+                  className={`relative text-sm font-medium px-4 py-1.5 rounded-full transition-colors whitespace-nowrap z-10
+                    ${isActive ? 'text-primary' : 'text-stone-600 hover:text-primary'}`}
                 >
                   {item.name}
                   {isActive && (
                     <motion.div
                       layoutId="lamp"
-                      className="absolute inset-0 rounded-full -z-10"
-                      style={{ background: 'rgba(255,255,255,0.15)' }}
+                      className="absolute inset-0 bg-primary/5 rounded-full -z-10"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     >
@@ -119,17 +89,13 @@ export default function TubelightNavbar() {
               href="https://maps.google.com/?q=VPX6%2BGW+Thodupuzha,+Kerala"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/30"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors"
             >
               <MapPin size={14} />
               <span className="hidden sm:inline">Directions</span>
             </a>
             <button
-              className={`lg:hidden p-2 rounded-lg transition-colors ${
-                atTop
-                  ? 'text-white hover:bg-white/15'
-                  : 'text-stone-600 hover:text-primary hover:bg-amber-50'
-              }`}
+              className="lg:hidden p-2 rounded-lg text-stone-600 hover:text-primary hover:bg-amber-50 transition-colors"
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
             >
@@ -147,13 +113,7 @@ export default function TubelightNavbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.22, ease: 'easeInOut' }}
-              style={{
-                background: 'rgba(255,255,255,0.75)',
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-                borderTop: '1px solid rgba(255,255,255,0.3)',
-              }}
-              className="lg:hidden overflow-hidden"
+              className="lg:hidden overflow-hidden bg-white border-t border-amber-100"
             >
               <ul className="px-4 py-3 space-y-1">
                 {navItems.map((item) => {
@@ -166,8 +126,8 @@ export default function TubelightNavbar() {
                         onClick={() => setActiveTab(item.name)}
                         className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-colors
                           ${isActive
-                            ? 'text-primary bg-amber-50/80'
-                            : 'text-stone-700 hover:text-primary hover:bg-white/60'
+                            ? 'text-primary bg-amber-50'
+                            : 'text-stone-700 hover:text-primary hover:bg-amber-50'
                           }`}
                       >
                         <Icon size={16} className={isActive ? 'text-primary' : 'text-stone-400'} />
@@ -196,15 +156,8 @@ export default function TubelightNavbar() {
       {/* ── Mobile bottom pill ─────────────────────────────────────── */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 lg:hidden">
         <div
-          style={{
-            background: 'rgba(255,255,255,0.75)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.4)',
-            boxShadow: '0 8px 32px -4px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)',
-            overflow: 'visible',
-          }}
-          className="flex items-center gap-0.5 py-1 px-1 rounded-full"
+          className="flex items-center gap-0.5 bg-white/95 border border-stone-200 backdrop-blur-lg py-1 px-1 rounded-full shadow-xl"
+          style={{ overflow: 'visible' }}
         >
           {pillItems.map((item) => {
             const Icon = item.icon
@@ -222,8 +175,7 @@ export default function TubelightNavbar() {
                 {isActive && (
                   <motion.div
                     layoutId="lamp-mobile"
-                    className="absolute inset-0 rounded-full -z-10"
-                    style={{ background: 'rgba(217,119,6,0.08)' }}
+                    className="absolute inset-0 bg-primary/5 rounded-full -z-10"
                     initial={false}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   >
