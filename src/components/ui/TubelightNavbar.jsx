@@ -25,6 +25,7 @@ function getActive(pathname) {
 export default function TubelightNavbar() {
   const location = useLocation()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const [activeTab, setActiveTab] = useState(() => getActive(location.pathname))
 
   useEffect(() => {
@@ -32,10 +33,22 @@ export default function TubelightNavbar() {
     setOpen(false)
   }, [location.pathname])
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
       {/* ── Top header bar ─────────────────────────────────────────── */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100/60 h-16">
+      <header
+        className={`fixed top-0 inset-x-0 z-50 h-16 transition-all duration-500 ${
+          scrolled
+            ? 'bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08),inset_0_1px_0_0_rgba(255,255,255,0.6)]'
+            : 'bg-white/20 backdrop-blur-xl border-b border-white/20 shadow-[0_2px_16px_-4px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.3)]'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between relative">
 
           {/* Logo */}
@@ -115,7 +128,7 @@ export default function TubelightNavbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.22, ease: 'easeInOut' }}
-              className="lg:hidden overflow-hidden bg-white border-t border-amber-100"
+              className="lg:hidden overflow-hidden bg-white/80 backdrop-blur-xl border-t border-white/30"
             >
               <ul className="px-4 py-3 space-y-1">
                 {navItems.map((item) => {
