@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, AlertTriangle, XCircle } from 'lucide-react'
+import { Heart, AlertTriangle, XCircle, CheckCircle2 } from 'lucide-react'
 import { useFavorites } from '../context/FavoritesContext'
 import { useStock } from '../context/StockContext'
 
@@ -15,7 +15,11 @@ function StockBadge({ count }) {
       <AlertTriangle size={10} /> Only {count} left
     </span>
   )
-  return null
+  return (
+    <span className="absolute bottom-2 left-2 flex items-center gap-1 text-[10px] font-bold text-green-800 bg-green-100 border border-green-200 px-2 py-0.5 rounded-full shadow-sm">
+      <CheckCircle2 size={10} /> In Stock · {count}
+    </span>
+  )
 }
 
 export default function ProductCard({ name, category, image, index = 0 }) {
