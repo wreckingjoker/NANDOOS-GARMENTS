@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Clock, ExternalLink, Phone, MessageCircle } from 'lucide-react'
+import { MapPin, Clock, ExternalLink, Phone, MessageCircle, Settings2 } from 'lucide-react'
 import brand from '../data/brand.json'
 
 export default function Footer() {
@@ -81,7 +81,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-stone-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-stone-500">
           <span>© {year} Nandoos Garments, Thodupuzha. All rights reserved.</span>
-          <nav className="flex gap-5">
+          <nav className="flex gap-5 items-center">
             {[
               { to: '/', label: 'Home' },
               { to: '/about', label: 'About' },
@@ -91,6 +91,13 @@ export default function Footer() {
                 {l.label}
               </Link>
             ))}
+            <Link
+              to="/admin"
+              className="hover:text-stone-400 transition-colors opacity-40 hover:opacity-70"
+              aria-label="Admin"
+            >
+              <Settings2 size={13} />
+            </Link>
           </nav>
         </div>
       </div>
