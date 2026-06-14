@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="font-heading text-2xl font-bold text-white mb-1">Nandoos Garments</h3>
-            <p className="text-amber-400 text-sm mb-5">നന്ദുസ് ഗാർമെൻ്റ്സ്</p>
+            <p className="text-amber-400 text-sm mb-5">നന്ദൂസ് ഗാർമെൻ്റ്സ്</p>
             <p className="text-sm leading-relaxed text-stone-400 max-w-xs">
               Your trusted clothing store in Thodupuzha — affordable fashion for the whole family since we opened our doors.
             </p>

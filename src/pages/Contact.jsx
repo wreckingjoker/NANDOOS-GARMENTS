@@ -63,7 +63,7 @@ export default function Contact() {
                 <h2 className="font-heading text-2xl font-bold text-stone-800 mb-0.5">
                   Nandoos Garments
                 </h2>
-                <p className="text-amber-600 text-sm font-medium">നന്ദുസ് ഗാർമെൻ്റ്സ്</p>
+                <p className="text-amber-600 text-sm font-medium">നന്ദൂസ് ഗാർമെൻ്റ്സ്</p>
               </div>
 
               {/* Address */}
