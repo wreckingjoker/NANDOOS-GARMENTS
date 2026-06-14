@@ -13,7 +13,6 @@ const navItems = [
   { name: 'Contact',       url: '/contact',          icon: Phone },
 ]
 
-// Trimmed set for the bottom pill — keeps it fitting 320 px screens
 const pillItems = navItems.slice(0, 5)
 
 function getActive(pathname) {
@@ -34,29 +33,35 @@ export default function TubelightNavbar() {
   }, [location.pathname])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const atTop = !scrolled
+
   return (
     <>
-      {/* ── Top header bar ─────────────────────────────────────────── */}
+      {/* ── Top header ─────────────────────────────────────────────── */}
       <header
-        className={`fixed top-0 inset-x-0 z-50 h-16 transition-all duration-500 ${
-          scrolled
-            ? 'bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08),inset_0_1px_0_0_rgba(255,255,255,0.6)]'
-            : 'bg-white/20 backdrop-blur-xl border-b border-white/20 shadow-[0_2px_16px_-4px_rgba(0,0,0,0.06),inset_0_1px_0_0_rgba(255,255,255,0.3)]'
+        className={`fixed top-0 inset-x-0 z-50 h-16 transition-all duration-500 ease-in-out ${
+          atTop
+            ? 'bg-transparent border-b border-white/10'
+            : 'bg-white/60 backdrop-blur-2xl border-b border-white/40 shadow-[0_4px_30px_-4px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.7)]'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between relative">
 
           {/* Logo */}
           <Link to="/" className="flex flex-col leading-tight shrink-0 min-w-0">
-            <span className="font-heading text-base sm:text-lg lg:text-xl font-bold text-primary truncate">
+            <span className={`font-heading text-base sm:text-lg lg:text-xl font-bold truncate transition-colors duration-300 drop-shadow-sm ${
+              atTop ? 'text-white' : 'text-primary'
+            }`}>
               Nandoos Garments
             </span>
-            <span className="text-[10px] sm:text-[11px] text-secondary font-medium tracking-wide">
+            <span className={`text-[10px] sm:text-[11px] font-medium tracking-wide transition-colors duration-300 ${
+              atTop ? 'text-amber-200' : 'text-secondary'
+            }`}>
               നന്ദൂസ് ഗാർമെൻ്റ്സ്
             </span>
           </Link>
@@ -64,8 +69,15 @@ export default function TubelightNavbar() {
           {/* ── Tubelight pill — desktop lg+ ─────────────────────── */}
           <nav
             aria-label="Main navigation"
-            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-stone-50/80 border border-stone-200/80 py-1 px-1 rounded-full shadow-sm"
-            style={{ overflow: 'visible' }}
+            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 py-1 px-1 rounded-full"
+            style={{
+              background: 'rgba(255,255,255,0.12)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 16px -4px rgba(0,0,0,0.1)',
+              overflow: 'visible',
+            }}
           >
             {navItems.map((item) => {
               const isActive = activeTab === item.name
@@ -74,18 +86,21 @@ export default function TubelightNavbar() {
                   key={item.name}
                   to={item.url}
                   onClick={() => setActiveTab(item.name)}
-                  className={`relative text-sm font-medium px-4 py-1.5 rounded-full transition-colors whitespace-nowrap z-10
-                    ${isActive ? 'text-primary' : 'text-stone-600 hover:text-primary'}`}
+                  className={`relative text-sm font-medium px-4 py-1.5 rounded-full transition-colors whitespace-nowrap z-10 ${
+                    isActive
+                      ? atTop ? 'text-amber-300' : 'text-primary'
+                      : atTop ? 'text-white/80 hover:text-white' : 'text-stone-600 hover:text-primary'
+                  }`}
                 >
                   {item.name}
                   {isActive && (
                     <motion.div
                       layoutId="lamp"
-                      className="absolute inset-0 bg-primary/5 rounded-full -z-10"
+                      className="absolute inset-0 rounded-full -z-10"
+                      style={{ background: 'rgba(255,255,255,0.15)' }}
                       initial={false}
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     >
-                      {/* Lamp points downward — top navbar */}
                       <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-b-full">
                         <div className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md top-0 -left-2" />
                         <div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md top-1" />
@@ -98,19 +113,23 @@ export default function TubelightNavbar() {
             })}
           </nav>
 
-          {/* Right: Directions CTA + hamburger */}
+          {/* Right: Directions + hamburger */}
           <div className="flex items-center gap-2 shrink-0">
             <a
               href="https://maps.google.com/?q=VPX6%2BGW+Thodupuzha,+Kerala"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 sm:px-4 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-dark transition-colors shadow-lg shadow-primary/30"
             >
               <MapPin size={14} />
               <span className="hidden sm:inline">Directions</span>
             </a>
             <button
-              className="lg:hidden p-2 rounded-lg text-stone-600 hover:text-primary hover:bg-amber-50 transition-colors"
+              className={`lg:hidden p-2 rounded-lg transition-colors ${
+                atTop
+                  ? 'text-white hover:bg-white/15'
+                  : 'text-stone-600 hover:text-primary hover:bg-amber-50'
+              }`}
               onClick={() => setOpen((v) => !v)}
               aria-label="Toggle menu"
             >
@@ -128,7 +147,13 @@ export default function TubelightNavbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.22, ease: 'easeInOut' }}
-              className="lg:hidden overflow-hidden bg-white/80 backdrop-blur-xl border-t border-white/30"
+              style={{
+                background: 'rgba(255,255,255,0.75)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                borderTop: '1px solid rgba(255,255,255,0.3)',
+              }}
+              className="lg:hidden overflow-hidden"
             >
               <ul className="px-4 py-3 space-y-1">
                 {navItems.map((item) => {
@@ -141,8 +166,8 @@ export default function TubelightNavbar() {
                         onClick={() => setActiveTab(item.name)}
                         className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-colors
                           ${isActive
-                            ? 'text-primary bg-amber-50'
-                            : 'text-stone-700 hover:text-primary hover:bg-amber-50'
+                            ? 'text-primary bg-amber-50/80'
+                            : 'text-stone-700 hover:text-primary hover:bg-white/60'
                           }`}
                       >
                         <Icon size={16} className={isActive ? 'text-primary' : 'text-stone-400'} />
@@ -168,12 +193,18 @@ export default function TubelightNavbar() {
         </AnimatePresence>
       </header>
 
-      {/* ── Mobile bottom pill (lg hidden) ─────────────────────────── */}
-      {/* Shows 5 core items so it fits 320 px screens */}
+      {/* ── Mobile bottom pill ─────────────────────────────────────── */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 lg:hidden">
         <div
-          className="flex items-center gap-0.5 bg-white/95 border border-stone-200 backdrop-blur-lg py-1 px-1 rounded-full shadow-xl"
-          style={{ overflow: 'visible' }}
+          style={{
+            background: 'rgba(255,255,255,0.75)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.4)',
+            boxShadow: '0 8px 32px -4px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6)',
+            overflow: 'visible',
+          }}
+          className="flex items-center gap-0.5 py-1 px-1 rounded-full"
         >
           {pillItems.map((item) => {
             const Icon = item.icon
@@ -191,11 +222,11 @@ export default function TubelightNavbar() {
                 {isActive && (
                   <motion.div
                     layoutId="lamp-mobile"
-                    className="absolute inset-0 bg-primary/5 rounded-full -z-10"
+                    className="absolute inset-0 rounded-full -z-10"
+                    style={{ background: 'rgba(217,119,6,0.08)' }}
                     initial={false}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   >
-                    {/* Lamp points upward — bottom pill */}
                     <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-primary rounded-t-full">
                       <div className="absolute w-10 h-5 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
                       <div className="absolute w-6 h-4 bg-primary/20 rounded-full blur-sm -top-1" />
