@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, Clock, Navigation, Phone } from 'lucide-react'
+import { MapPin, Clock, Navigation, Phone, MessageCircle } from 'lucide-react'
 import SectionReveal from '../components/SectionReveal'
 import brand from '../data/brand.json'
 
@@ -101,7 +101,7 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Phone — hidden until confirmed */}
+              {/* Phone */}
               {brand.phone && (
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-amber-50 flex items-center justify-center shrink-0">
@@ -110,15 +110,14 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold text-stone-800 mb-1 text-sm">Phone</h3>
                     <a
-                      href={`tel:${brand.phone}`}
+                      href={`tel:+91${brand.phone}`}
                       className="text-primary text-sm font-medium hover:text-primary-dark transition-colors"
                     >
-                      {brand.phone}
+                      +91 {brand.phone}
                     </a>
                   </div>
                 </div>
               )}
-              {/* TODO: Add phone link once number is confirmed */}
 
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
@@ -131,10 +130,26 @@ export default function Contact() {
                   <Navigation size={16} />
                   Get Directions
                 </a>
-                <div className="inline-flex items-center justify-center px-6 py-3 border border-stone-200 text-stone-500 rounded-xl text-sm bg-white">
-                  {/* TODO: Replace with phone link once number is provided */}
-                  Call us in-store
-                </div>
+                {brand.whatsapp && (
+                  <a
+                    href={`https://wa.me/${brand.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-colors text-sm"
+                  >
+                    <MessageCircle size={16} />
+                    WhatsApp Us
+                  </a>
+                )}
+                {brand.phone && (
+                  <a
+                    href={`tel:+91${brand.phone}`}
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-stone-200 text-stone-700 hover:text-primary hover:border-primary rounded-xl transition-colors text-sm font-medium bg-white"
+                  >
+                    <Phone size={15} />
+                    Call Us
+                  </a>
+                )}
               </div>
             </div>
           </SectionReveal>

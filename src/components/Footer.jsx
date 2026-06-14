@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Clock, ExternalLink } from 'lucide-react'
+import { MapPin, Clock, ExternalLink, Phone, MessageCircle } from 'lucide-react'
+import brand from '../data/brand.json'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -36,6 +37,26 @@ export default function Footer() {
             >
               Open in Google Maps <ExternalLink size={12} />
             </a>
+            {brand.phone && (
+              <div className="flex items-center gap-3 mt-4">
+                <a
+                  href={`tel:+91${brand.phone}`}
+                  className="inline-flex items-center gap-1.5 text-stone-400 hover:text-amber-400 text-sm transition-colors"
+                >
+                  <Phone size={13} /> +91 {brand.phone}
+                </a>
+                {brand.whatsapp && (
+                  <a
+                    href={`https://wa.me/${brand.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-green-400 hover:text-green-300 text-sm font-medium transition-colors"
+                  >
+                    <MessageCircle size={13} /> WhatsApp
+                  </a>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Hours */}
