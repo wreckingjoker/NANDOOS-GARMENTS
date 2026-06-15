@@ -60,34 +60,38 @@ export default function Home() {
   return (
     <main>
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[100svh] flex items-center overflow-hidden">
         <img
-          src="/images/nandoos-shop.png"
+          src="/images/nandoos-family-cover.png"
           alt="Nandoos Garments Thodupuzha"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/40 via-stone-900/60 to-stone-900/75" />
+        {/* Gradient: transparent on left (shows family), dark on right (text readability) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/10 via-stone-900/40 to-stone-900/85" />
+        {/* Extra bottom fade for mobile */}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent" />
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 text-center px-4 max-w-3xl mx-auto pt-10"
+          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 flex justify-end"
         >
+          <div className="w-full sm:max-w-lg lg:max-w-xl text-left">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.5 }}
             className="text-amber-300 text-xl sm:text-2xl font-medium tracking-wider mb-3 drop-shadow"
           >
-            നന്ദുസ് ഗാർമെൻ്റ്സ്
+            നന്ദൂസ് ഗാർമെൻ്റ്സ്
           </motion.p>
 
           <motion.h1
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.65 }}
-            className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5 text-balance"
+            className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5"
           >
             Quality Clothing for Every Occasion
           </motion.h1>
@@ -96,7 +100,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.6 }}
-            className="text-stone-200 text-base sm:text-lg mb-8 max-w-xl mx-auto leading-relaxed"
+            className="text-stone-200 text-base sm:text-lg mb-8 leading-relaxed"
           >
             Economical prices · Wide variety · Thodupuzha's trusted family clothing store
           </motion.p>
@@ -105,7 +109,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3"
+            className="flex flex-col sm:flex-row items-start gap-3"
           >
             <Link
               to="/kids-wear"
@@ -141,6 +145,7 @@ export default function Home() {
               4.0 · {brand.review_count} Google Reviews
             </span>
           </motion.div>
+          </div>
         </motion.div>
 
         {/* Scroll cue */}
