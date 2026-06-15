@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <main>
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[100svh] flex items-center overflow-hidden">
+      <section className="relative min-h-[100svh] flex items-end sm:items-center overflow-hidden">
         <picture className="absolute inset-0 w-full h-full">
           {/* Portrait crop for mobile */}
           <source media="(max-width: 639px)" srcSet="/images/nandoos-family-cover-mobile.png" />
@@ -71,16 +71,17 @@ export default function Home() {
             className="w-full h-full object-cover object-center"
           />
         </picture>
-        {/* Mobile: centre-darkened overlay; Desktop: left-clear → right-dark */}
-        <div className="absolute inset-0 bg-stone-900/50 sm:bg-transparent" />
+        {/* Mobile: strong bottom-up fade so text sits on dark band at bottom */}
+        <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-stone-900/95 via-stone-900/40 to-stone-900/5" />
+        {/* Desktop: left-clear → right-dark */}
         <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-stone-900/10 via-stone-900/40 to-stone-900/85" />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-transparent to-transparent" />
+        <div className="absolute inset-0 hidden sm:block bg-gradient-to-t from-stone-900/50 via-transparent to-transparent" />
 
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 flex justify-end"
+          className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-0 sm:pt-10 flex sm:justify-end"
         >
           <div className="w-full sm:max-w-lg lg:max-w-xl text-left">
           <motion.p

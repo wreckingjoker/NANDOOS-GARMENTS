@@ -37,7 +37,7 @@ export default function TubelightNavbar() {
   return (
     <>
       {/* ── Top header bar ─────────────────────────────────────────── */}
-      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white/95 backdrop-blur-sm border-b border-amber-100/60">
+      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-gradient-to-r from-amber-50/95 via-white/95 to-amber-50/95 backdrop-blur-md border-b border-amber-200/70 shadow-sm shadow-amber-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between relative">
 
           {/* Logo */}
@@ -53,7 +53,7 @@ export default function TubelightNavbar() {
           {/* ── Tubelight pill — desktop lg+ ─────────────────────── */}
           <nav
             aria-label="Main navigation"
-            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-stone-50/80 border border-stone-200/80 py-1 px-1 rounded-full shadow-sm"
+            className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-0.5 bg-white/70 border border-amber-200/70 py-1 px-1 rounded-full shadow-sm shadow-amber-100/60 backdrop-blur-sm"
             style={{ overflow: 'visible' }}
           >
             {navItems.map((item) => {
@@ -138,7 +138,7 @@ export default function TubelightNavbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.22, ease: 'easeInOut' }}
-              className="lg:hidden overflow-hidden bg-white border-t border-amber-100"
+              className="lg:hidden overflow-hidden bg-amber-50/95 backdrop-blur-md border-t border-amber-200/60"
             >
               <ul className="px-4 py-3 space-y-1">
                 {navItems.map((item) => {

@@ -25,9 +25,10 @@ function StockBadge({ count }) {
 export default function ProductCard({ name, category, image, index = 0 }) {
   const id = `${category}-${name}`
   const { toggle, isFavorite } = useFavorites()
-  const { getStock } = useStock()
+  const { getStock, getPrice } = useStock()
   const liked = isFavorite(id)
   const stock = getStock(id)
+  const price = getPrice(id)
   const isOut = stock === 0
 
   function handleLike(e) {
@@ -97,13 +98,15 @@ export default function ProductCard({ name, category, image, index = 0 }) {
         </button>
       </div>
 
-      <div className="p-4">
-        <span className="inline-block text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full mb-2 tracking-wide uppercase">
+      <div className="px-4 pt-3 pb-3.5">
+        <span className="inline-block text-[11px] font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full tracking-wide uppercase">
           {category}
         </span>
-        <h3 className={`text-sm font-semibold leading-snug ${isOut ? 'text-stone-400' : 'text-stone-800'}`}>
-          {name}
-        </h3>
+        {price !== null && (
+          <p className={`mt-1.5 text-base font-bold ${isOut ? 'text-stone-400' : 'text-stone-800'}`}>
+            ₹{price.toLocaleString('en-IN')}
+          </p>
+        )}
       </div>
     </motion.article>
   )

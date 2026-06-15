@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, LogOut, Plus, Minus, Package, CheckCircle2, AlertTriangle, XCircle } from 'lucide-react'
+import { Lock, LogOut, Plus, Minus, Package, CheckCircle2, AlertTriangle, XCircle, IndianRupee } from 'lucide-react'
 import { useStock } from '../context/StockContext'
 import brand from '../data/brand.json'
 
@@ -22,63 +22,93 @@ function stockLabel(count) {
 
 function StockRow({ product, category }) {
   const id = `${category}-${product.name}`
-  const { getStock, setProductStock } = useStock()
+  const { getStock, setProductStock, getPrice, setProductPrice } = useStock()
   const count = getStock(id)
+  const price = getPrice(id)
   const info = stockLabel(count)
 
   const adjust = useCallback((delta) => {
     setProductStock(id, (count ?? 0) + delta)
   }, [id, count, setProductStock])
 
-  const handleInput = useCallback((e) => {
+  const handleStockInput = useCallback((e) => {
     const v = parseInt(e.target.value, 10)
     if (!isNaN(v)) setProductStock(id, v)
   }, [id, setProductStock])
 
-  return (
-    <div className="flex items-center gap-3 py-3 border-b border-stone-100 last:border-0">
-      {/* Thumbnail */}
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-12 h-14 rounded-lg object-cover shrink-0 bg-stone-100"
-      />
+  const handlePriceInput = useCallback((e) => {
+    const v = e.target.value
+    if (v === '') { setProductPrice(id, null); return }
+    const n = parseInt(v, 10)
+    if (!isNaN(n)) setProductPrice(id, n)
+  }, [id, setProductPrice])
 
-      {/* Name */}
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-stone-800 truncate">{product.name}</p>
-        {info ? (
-          <span className={`inline-flex items-center gap-1 text-[11px] font-semibold mt-0.5 ${info.color}`}>
-            <info.icon size={11} /> {info.text}
-          </span>
-        ) : (
-          <span className="text-[11px] text-stone-400 mt-0.5 inline-block">Stock not set</span>
-        )}
+  return (
+    <div className="py-3 border-b border-stone-100 last:border-0">
+      <div className="flex items-center gap-3">
+        {/* Thumbnail */}
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-12 h-14 rounded-lg object-cover shrink-0 bg-stone-100"
+        />
+
+        {/* Name + status */}
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-medium text-stone-800 truncate">{product.name}</p>
+          {info ? (
+            <span className={`inline-flex items-center gap-1 text-[11px] font-semibold mt-0.5 ${info.color}`}>
+              <info.icon size={11} /> {info.text}
+            </span>
+          ) : (
+            <span className="text-[11px] text-stone-400 mt-0.5 inline-block">Stock not set</span>
+          )}
+        </div>
+
+        {/* Stock controls */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            onClick={() => adjust(-1)}
+            disabled={count === 0}
+            className="w-7 h-7 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-stone-600 transition-colors"
+          >
+            <Minus size={13} />
+          </button>
+          <input
+            type="number"
+            min={0}
+            value={count ?? ''}
+            onChange={handleStockInput}
+            placeholder="—"
+            className="w-14 text-center text-sm font-semibold text-stone-800 border border-stone-200 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
+          />
+          <button
+            onClick={() => adjust(1)}
+            className="w-7 h-7 rounded-lg bg-amber-100 hover:bg-amber-200 flex items-center justify-center text-amber-700 transition-colors"
+          >
+            <Plus size={13} />
+          </button>
+        </div>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center gap-1.5 shrink-0">
-        <button
-          onClick={() => adjust(-1)}
-          disabled={count === 0}
-          className="w-7 h-7 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-stone-600 transition-colors"
-        >
-          <Minus size={13} />
-        </button>
-        <input
-          type="number"
-          min={0}
-          value={count ?? ''}
-          onChange={handleInput}
-          placeholder="—"
-          className="w-14 text-center text-sm font-semibold text-stone-800 border border-stone-200 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary"
-        />
-        <button
-          onClick={() => adjust(1)}
-          className="w-7 h-7 rounded-lg bg-amber-100 hover:bg-amber-200 flex items-center justify-center text-amber-700 transition-colors"
-        >
-          <Plus size={13} />
-        </button>
+      {/* Price field */}
+      <div className="mt-2 ml-15 flex items-center gap-2 pl-[60px]">
+        <div className="flex items-center gap-1.5 border border-stone-200 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-primary">
+          <span className="pl-2.5 text-stone-400">
+            <IndianRupee size={13} />
+          </span>
+          <input
+            type="number"
+            min={0}
+            value={price ?? ''}
+            onChange={handlePriceInput}
+            placeholder="Set price"
+            className="w-28 text-sm font-semibold text-stone-800 py-1 pr-2.5 focus:outline-none bg-transparent"
+          />
+        </div>
+        {price !== null && (
+          <span className="text-xs text-green-600 font-medium">₹{price.toLocaleString('en-IN')}</span>
+        )}
       </div>
     </div>
   )

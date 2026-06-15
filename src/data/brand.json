@@ -53,55 +53,17 @@
   ],
   "products": {
     "kids": [
-      { "name": "Cotton Frock Set", "image": "https://picsum.photos/seed/kids-1/400/500" },
-      { "name": "Party Dress", "image": "https://picsum.photos/seed/kids-2/400/500" },
-      { "name": "School Uniform Set", "image": "https://picsum.photos/seed/kids-3/400/500" },
-      { "name": "Cotton Kurta Set", "image": "https://picsum.photos/seed/kids-4/400/500" },
-      { "name": "Casual T-Shirt Set", "image": "https://picsum.photos/seed/kids-5/400/500" },
-      { "name": "Festival Outfit", "image": "https://picsum.photos/seed/kids-6/400/500" },
-      { "name": "Denim Set", "image": "https://picsum.photos/seed/kids-7/400/500" },
-      { "name": "Sleepwear Set", "image": "https://picsum.photos/seed/kids-8/400/500" },
-      { "name": "Newborn Gift Set", "image": "https://picsum.photos/seed/kids-9/400/500" },
-      { "name": "Toddler Dress", "image": "https://picsum.photos/seed/kids-10/400/500" },
-      { "name": "Birthday Outfit", "image": "https://picsum.photos/seed/kids-11/400/500" },
-      { "name": "Ethnic Kids Set", "image": "https://picsum.photos/seed/kids-12/400/500" }
+      { "name": "Kids Dress", "image": "/images/kids-dress1.png" },
+      { "name": "Kids Dress 2", "image": "/images/kids-dress2.png" },
+      { "name": "Kids Dress 3", "image": "/images/kids-dress3.png" }
     ],
     "ladies": [
-      { "name": "Cotton Saree", "image": "https://picsum.photos/seed/ladies-1/400/500" },
-      { "name": "Silk Saree", "image": "https://picsum.photos/seed/ladies-2/400/500" },
-      { "name": "Churidar Set", "image": "https://picsum.photos/seed/ladies-3/400/500" },
-      { "name": "Printed Cotton Kurti", "image": "https://picsum.photos/seed/ladies-4/400/500" },
-      { "name": "Palazzo Set", "image": "https://picsum.photos/seed/ladies-5/400/500" },
-      { "name": "Casual Kurti Set", "image": "https://picsum.photos/seed/ladies-11/400/500" },
-      { "name": "Ethnic Blouse Set", "image": "https://picsum.photos/seed/ladies-12/400/500" }
+      { "name": "Lady Saree 1", "image": "/images/lady-saree1.png" },
+      { "name": "Lady Saree 2", "image": "/images/lady-saree2.png" },
+      { "name": "Lady Saree 3", "image": "/images/lady-saree3.png" },
+      { "name": "Lady Saree 4", "image": "/images/lady-saree4.png" }
     ],
-    "traditional": [
-      { "name": "Kuthampully Dhoti", "image": "https://picsum.photos/seed/trad-1/400/500" },
-      { "name": "Kasavu Mundu", "image": "https://picsum.photos/seed/trad-2/400/500" },
-      { "name": "Double Mundu", "image": "https://picsum.photos/seed/trad-3/400/500" },
-      { "name": "Fancy Dhoti", "image": "https://picsum.photos/seed/trad-4/400/500" },
-      { "name": "Silk Dhoti", "image": "https://picsum.photos/seed/trad-5/400/500" },
-      { "name": "Dhoti with Angavastram", "image": "https://picsum.photos/seed/trad-6/400/500" },
-      { "name": "Premium Kasavu Mundu", "image": "https://picsum.photos/seed/trad-7/400/500" },
-      { "name": "Festival Dhoti", "image": "https://picsum.photos/seed/trad-8/400/500" },
-      { "name": "Set Mundu", "image": "https://picsum.photos/seed/trad-9/400/500" },
-      { "name": "Checks Dhoti", "image": "https://picsum.photos/seed/trad-10/400/500" },
-      { "name": "White Dhoti", "image": "https://picsum.photos/seed/trad-11/400/500" },
-      { "name": "Golden Border Dhoti", "image": "https://picsum.photos/seed/trad-12/400/500" }
-    ],
-    "mens": [
-      { "name": "Formal Shirt", "image": "https://picsum.photos/seed/mens-1/400/500" },
-      { "name": "Cotton Kurta", "image": "https://picsum.photos/seed/mens-2/400/500" },
-      { "name": "Casual Shirt", "image": "https://picsum.photos/seed/mens-3/400/500" },
-      { "name": "Check Shirt", "image": "https://picsum.photos/seed/mens-4/400/500" },
-      { "name": "Formal Trousers", "image": "https://picsum.photos/seed/mens-5/400/500" },
-      { "name": "Denim Jeans", "image": "https://picsum.photos/seed/mens-6/400/500" },
-      { "name": "Round Neck T-Shirt", "image": "https://picsum.photos/seed/mens-7/400/500" },
-      { "name": "Linen Shirt", "image": "https://picsum.photos/seed/mens-8/400/500" },
-      { "name": "Ethnic Kurta Pajama", "image": "https://picsum.photos/seed/mens-9/400/500" },
-      { "name": "Safari Suit", "image": "https://picsum.photos/seed/mens-10/400/500" },
-      { "name": "Wedding Kurta", "image": "https://picsum.photos/seed/mens-11/400/500" },
-      { "name": "Track Suit", "image": "https://picsum.photos/seed/mens-12/400/500" }
-    ]
+    "traditional": [],
+    "mens": []
   }
 }
