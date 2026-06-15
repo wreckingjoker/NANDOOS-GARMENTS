@@ -37,7 +37,7 @@ export default function TubelightNavbar() {
   return (
     <>
       {/* ── Top header bar ─────────────────────────────────────────── */}
-      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-gradient-to-r from-amber-50/95 via-white/95 to-amber-50/95 backdrop-blur-md border-b border-amber-200/70 shadow-sm shadow-amber-100/50">
+      <header className="fixed top-0 inset-x-0 z-50 h-16 bg-white/20 backdrop-blur-xl border-b border-white/30 shadow-lg shadow-amber-900/5" style={{ background: 'linear-gradient(135deg, rgba(255,251,235,0.45) 0%, rgba(255,255,255,0.25) 50%, rgba(255,251,235,0.45) 100%)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between relative">
 
           {/* Logo */}
