@@ -61,15 +61,20 @@ export default function Home() {
     <main>
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[100svh] flex items-center overflow-hidden">
-        <img
-          src="/images/nandoos-family-cover.png"
-          alt="Nandoos Garments Thodupuzha"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-        {/* Gradient: transparent on left (shows family), dark on right (text readability) */}
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-900/10 via-stone-900/40 to-stone-900/85" />
-        {/* Extra bottom fade for mobile */}
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/60 via-transparent to-transparent" />
+        <picture className="absolute inset-0 w-full h-full">
+          {/* Portrait crop for mobile */}
+          <source media="(max-width: 639px)" srcSet="/images/nandoos-family-cover-mobile.png" />
+          {/* Wide cover for tablet and desktop */}
+          <img
+            src="/images/nandoos-family-cover.png"
+            alt="Nandoos Garments Thodupuzha"
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
+        {/* Mobile: centre-darkened overlay; Desktop: left-clear → right-dark */}
+        <div className="absolute inset-0 bg-stone-900/50 sm:bg-transparent" />
+        <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-stone-900/10 via-stone-900/40 to-stone-900/85" />
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-transparent to-transparent" />
 
         <motion.div
           initial={{ opacity: 0, x: 30 }}
