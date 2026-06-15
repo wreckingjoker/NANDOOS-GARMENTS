@@ -1,39 +1,47 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-
-const STOCK_KEY = 'nandoos_stock'
-const PRICE_KEY = 'nandoos_prices'
+import { ref, onValue, set } from 'firebase/database'
+import { db } from '../lib/firebase'
 
 const StockContext = createContext(null)
 
+// Firebase keys cannot contain . # $ / [ ]
+// Our IDs use apostrophes, spaces, and hyphens — all safe.
+// We replace spaces with underscores so paths look clean in Firebase console.
+function toKey(id) {
+  return id.replace(/ /g, '_')
+}
+
 export function StockProvider({ children }) {
-  const [stock, setStock] = useState(() => {
-    try { return JSON.parse(localStorage.getItem(STOCK_KEY)) ?? {} } catch { return {} }
-  })
+  const [stock, setStock]   = useState({})
+  const [prices, setPrices] = useState({})
 
-  const [prices, setPrices] = useState(() => {
-    try { return JSON.parse(localStorage.getItem(PRICE_KEY)) ?? {} } catch { return {} }
-  })
-
-  useEffect(() => { localStorage.setItem(STOCK_KEY, JSON.stringify(stock)) }, [stock])
-  useEffect(() => { localStorage.setItem(PRICE_KEY, JSON.stringify(prices)) }, [prices])
+  useEffect(() => {
+    const unsubStock = onValue(ref(db, 'stock'), (snap) => {
+      setStock(snap.val() ?? {})
+    })
+    const unsubPrices = onValue(ref(db, 'prices'), (snap) => {
+      setPrices(snap.val() ?? {})
+    })
+    return () => { unsubStock(); unsubPrices() }
+  }, [])
 
   const setProductStock = useCallback((id, count) => {
-    setStock((prev) => ({ ...prev, [id]: Math.max(0, count) }))
+    set(ref(db, `stock/${toKey(id)}`), Math.max(0, count))
   }, [])
 
   const setProductPrice = useCallback((id, price) => {
-    setPrices((prev) => {
-      if (price === '' || price === null) {
-        const next = { ...prev }
-        delete next[id]
-        return next
-      }
-      return { ...prev, [id]: Math.max(0, price) }
-    })
+    set(ref(db, `prices/${toKey(id)}`), price === null ? null : Math.max(0, price))
   }, [])
 
-  const getStock = useCallback((id) => stock[id] ?? null, [stock])
-  const getPrice = useCallback((id) => prices[id] ?? null, [prices])
+  const getStock = useCallback((id) => {
+    const v = stock[toKey(id)]
+    return v === undefined ? null : v
+  }, [stock])
+
+  const getPrice = useCallback((id) => {
+    const v = prices[toKey(id)]
+    return v === undefined ? null : v
+  }, [prices])
 
   return (
     <StockContext.Provider value={{ stock, prices, setProductStock, setProductPrice, getStock, getPrice }}>
